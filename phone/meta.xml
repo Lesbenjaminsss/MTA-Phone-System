@@ -1,0 +1,12 @@
+<meta>
+    <info author="MTA Phone System" type="script" version="2.0.0" name="Realistic Phone" />
+    <script src="server.lua" type="server" />
+    <script src="client.lua" type="client" />
+    <file src="html/ui.html" />
+    <file src="html/css/style.css" />
+    <file src="html/js/app.js" />
+    <export function="getPlayerPhoneNumber" type="server" />
+    <export function="sendSMS" type="server" />
+    <export function="getPlayerBankBalance" type="server" />
+    <export function="transferMoney" type="server" />
+</meta>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTA Phone</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="phone">
+        <div id="status-bar">
+            <span id="time">00:00</span>
+            <div class="status-icons">
+                <span id="signal">&#128246;</span>
+                <span id="battery">&#128267;</span>
+            </div>
+        </div>
+        
+        <div id="screen">
+            <div id="home-screen" class="screen active">
+                <div class="phone-number" id="phone-number">5XX XXX XXXX</div>
+                <div class="app-grid">
+                    <div class="app" data-app="messages">
+                        <div class="app-icon">&#128172;</div>
+                        <span>Mesajlar</span>
+                    </div>
+                    <div class="app" data-app="contacts">
+                        <div class="app-icon">&#128101;</div>
+                        <span>Rehber</span>
+                    </div>
+                    <div class="app" data-app="phone">
+                        <div class="app-icon">&#128222;</div>
+                        <span>Telefon</span>
+                    </div>
+                    <div class="app" data-app="bank">
+                        <div class="app-icon">&#127974;</div>
+                        <span>Banka</span>
+                    </div>
+                    <div class="app" data-app="gallery">
+                        <div class="app-icon">&#128444;</div>
+                        <span>Galeri</span>
+                    </div>
+                    <div class="app" data-app="notes">
+                        <div class="app-icon">&#128221;</div>
+                        <span>Notlar</span>
+                    </div>
+                    <div class="app" data-app="taxi">
+                        <div class="app-icon">&#128661;</div>
+                        <span>Taksi</span>
+                    </div>
+                    <div class="app" data-app="weather">
+                        <div class="app-icon">&#127780;</div>
+                        <span>Hava</span>
+                    </div>
+                    <div class="app" data-app="music">
+                        <div class="app-icon">&#127925;</div>
+                        <span>Muzik</span>
+                    </div>
+                    <div class="app" data-app="map">
+                        <div class="app-icon">&#128506;</div>
+                        <span>Harita</span>
+                    </div>
+                    <div class="app" data-app="settings">
+                        <div class="app-icon">&#9881;</div>
+                        <span>Ayarlar</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="messages-screen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goHome()">&larr;</button>
+                    <h2>Mesajlar</h2>
+                </div>
+                <div id="message-list"></div>
+                <div id="new-message-form" class="hidden">
+                    <input type="text" id="msg-number" placeholder="Numara girin">
+                    <textarea id="msg-text" placeholder="Mesaj yaz..."></textarea>
+                    <button onclick="sendMessage()">Gonder</button>
+                </div>
+                <button class="fab" onclick="showNewMessage()">+</button>
+            </div>
+            
+            <div id="contacts-screen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goHome()">&larr;</button>
+                    <h2>Rehber</h2>
+                </div>
+                <div id="contact-list"></div>
+                <div id="new-contact-form" class="hidden">
+                    <input type="text" id="contact-name" placeholder="Isim">
+                    <input type="text" id="contact-number" placeholder="Numara">
+                    <button onclick="addContact()">Ekle</button>
+                </div>
+                <button class="fab" onclick="showNewContact()">+</button>
+            </div>
+            
+            <div id="phone-screen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goHome()">&larr;</button>
+                    <h2>Telefon</h2>
+                </div>
+                <div id="dial-display">
+                    <input type="text" id="dial-number" placeholder="Numara girin">
+                </div>
+                <div id="dial-pad">
+                    <button onclick="dialPress('1')">1</button>
+                    <button onclick="dialPress('2')">2</button>
+                    <button onclick="dialPress('3')">3</button>
+                    <button onclick="dialPress('4')">4</button>
+                    <button onclick="dialPress('5')">5</button>
+                    <button onclick="dialPress('6')">6</button>
+                    <button onclick="dialPress('7')">7</button>
+                    <button onclick="dialPress('8')">8</button>
+                    <button onclick="dialPress('9')">9</button>
+                    <button onclick="dialPress('*')">*</button>
+                    <button onclick="dialPress('0')">0</button>
+                    <button onclick="dialPress('#')">#</button>
+                </div>
+                <button class="call-btn" onclick="makeCall()">Ara</button>
+                <div id="call-screen" class="hidden">
+                    <div id="call-info">
+                        <div id="call-number"></div>
+                        <div id="call-status">Araniyor...</div>
+                        <div id="call-timer">00:00</div>
+                    </div>
+                    <button class="end-call-btn" onclick="endCall()">Kapat</button>
+                </div>
+                <div id="incoming-call-screen" class="hidden">
+                    <div id="incoming-info">
+                        <div id="incoming-number"></div>
+                        <div>Gelen Arama</div>
+                    </div>
+                    <div class="call-actions">
+                        <button class="accept-btn" onclick="acceptCall()">Kabul</button>
+                        <button class="reject-btn" onclick="rejectCall()">Reddet</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="bank-screen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goHome()">&larr;</button>
+                    <h2>Banka</h2>
+                </div>
+                <div id="bank-balance">
+                    <div class="balance-label">Bakiye</div>
+                    <div class="balance-amount" id="balance-amount">$0</div>
+                </div>
+                <div id="transfer-form">
+                    <h3>Para Transferi</h3>
+                    <input type="text" id="transfer-number" placeholder="Alici numarasi">
+                    <input type="number" id="transfer-amount" placeholder="Miktar">
+                    <button onclick="transferMoney()">Gonder</button>
+                </div>
+                <div id="transaction-history">
+                    <h3>Islem Gecmisi</h3>
+                    <div id="transaction-list"></div>
+                </div>
+            </div>
+            
+            <div id="gallery-screen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goHome()">&larr;</button>
+                    <h2>Galeri</h2>
+                </div>
+                <div id="photo-grid"></div>
+                <p class="empty-msg" id="no-photos">Fotograf yok. /selfie komutu ile cek!</p>
+            </div>
+            
+            <div id="notes-screen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goHome()">&larr;</button>
+                    <h2>Notlar</h2>
+                </div>
+                <div id="note-list"></div>
+                <div id="new-note-form" class="hidden">
+                    <textarea id="note-text" placeholder="Not yaz..."></textarea>
+                    <button onclick="saveNote()">Kaydet</button>
+                </div>
+                <button class="fab" onclick="showNewNote()">+</button>
+            </div>
+            
+            <div id="taxi-screen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goHome()">&larr;</button>
+                    <h2>Taksi</h2>
+                </div>
+                <div id="taxi-content">
+                    <div class="taxi-icon">&#128661;</div>
+                    <p>Taksi cagirmak icin butona basin</p>
+                    <button onclick="callTaxi()" id="call-taxi-btn">Taksi Cagir</button>
+                    <div id="taxi-status" class="hidden">
+                        <p id="taxi-status-text"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="weather-screen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goHome()">&larr;</button>
+                    <h2>Hava Durumu</h2>
+                </div>
+                <div id="weather-content">
+                    <div class="weather-icon" id="weather-icon">&#9728;</div>
+                    <div class="weather-temp" id="weather-temp">25C</div>
+                    <div class="weather-desc" id="weather-desc">Gunesli</div>
+                    <div class="weather-details">
+                        <span>Nem: <span id="weather-humidity">45%</span></span>
+                        <span>Ruzgar: <span id="weather-wind">12 km/h</span></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="music-screen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goHome()">&larr;</button>
+                    <h2>Muzik</h2>
+                </div>
+                <div id="music-content">
+                    <div class="album-art">&#127925;</div>
+                    <div class="song-info">
+                        <div id="song-title">Sarki secin</div>
+                        <div id="song-artist">-</div>
+                    </div>
+                    <div class="music-controls">
+                        <button onclick="prevSong()">&#9198;</button>
+                        <button onclick="togglePlay()" id="play-btn">&#9654;</button>
+                        <button onclick="nextSong()">&#9197;</button>
+                    </div>
+                    <div class="playlist" id="playlist"></div>
+                </div>
+            </div>
+            
+            <div id="map-screen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goHome()">&larr;</button>
+                    <h2>Harita</h2>
+                </div>
+                <div id="map-content">
+                    <p>Konum secmek icin haritaya tiklayin</p>
+                    <div id="selected-location">Secili: Yok</div>
+                    <button onclick="setWaypoint()">Yol Tarifi</button>
+                </div>
+            </div>
+            
+            <div id="settings-screen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goHome()">&larr;</button>
+                    <h2>Ayarlar</h2>
+                </div>
+                <div class="settings-list">
+                    <div class="setting-item">
+                        <span>Duvar Kagidi</span>
+                        <select id="wallpaper-select" onchange="changeWallpaper()">
+                            <option value="default">Varsayilan</option>
+                            <option value="dark">Koyu</option>
+                            <option value="blue">Mavi</option>
+                            <option value="green">Yesil</option>
+                            <option value="purple">Mor</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <span>Parlaklik</span>
+                        <input type="range" id="brightness-slider" min="20" max="100" value="80" onchange="changeBrightness()">
+                    </div>
+                    <div class="setting-item">
+                        <span>Numaram</span>
+                        <span id="my-number" class="setting-value">-</span>
+                    </div>
+                    <div class="setting-item">
+                        <button onclick="requestPlayerList()">Oyuncu Listesi (Debug)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="home-indicator"></div>
+    </div>
+    
+    <div id="notification" class="hidden">
+        <div id="notif-title"></div>
+        <div id="notif-text"></div>
+    </div>
+    
+    <script src="js/app.js"></script>
+</body>
+</html>
